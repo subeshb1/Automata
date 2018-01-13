@@ -111,7 +111,7 @@ class FATuples {
     
     get state() {
 
-        let state = this.state_.map(item => item);
+        let state = this.state_.slice(0);
         return state;
 
     }
@@ -120,7 +120,7 @@ class FATuples {
         if(state instanceof Array)  {
             let isString = state.every( item => typeof item === 'string' );
             if(isString)
-                this.state_ = state;
+                this.state_ = state.slice(0);
             else 
                 throw "The Array item must be a String in state Array";
         }
@@ -132,15 +132,18 @@ class FATuples {
 
     get final() {
 
-        let final = this.final_.map(item => item);
+        let final = this.final_.slice(0);
         return final;
         
     }
     set final(final) {
         if(final instanceof Array)  {
             let isString = final.every( item => typeof item === 'string' );
-            if(isString)
-                this.final_ = final;
+            if(isString) {
+                if(!final.every( item => this.state.find( state => state == item)))
+                    throw "The final state set is not a subset of States";
+                this.final_ = final.slice(0);
+            }
             else 
                 throw "The Array item must be a String in final Array";
         }
@@ -152,15 +155,16 @@ class FATuples {
 
     get alphabet() {
 
-        let alphabet = this.alphabet_.map(item => item);
+        let alphabet = this.alphabet_.slice(0);
         return alphabet;
         
     }
+
     set alphabet(alphabet) {
         if(alphabet instanceof Array)  {
             let isString = alphabet.every( item => typeof item === 'string' );
             if(isString)
-                this.alphabet_ = alphabet;
+                this.alphabet_ = alphabet.slice(0);
             else 
                 throw "The Array item must be a String in alphabet Array" ;
         }
@@ -176,12 +180,16 @@ class FATuples {
         return initial;
         
     }
+
     set initial(initial) {
         if(initial instanceof Array)  {
             if(initial.length === 1) {
                 let isString = initial.every( item => typeof item === 'string' );
-                if(isString)
-                    this.initial_ = initial;
+                if(isString) {
+                    if(!this.state.find( item => item === initial[0]))
+                        throw "The initial state doesn't belong to set of states"
+                    this.initial_ = initial.slice(0);
+                }
                 else 
                     throw "The Array item must be a String";
             } else throw "The Array item must be a String";
@@ -194,7 +202,7 @@ class FATuples {
 
     // get state() {
 
-    //     let state = this.state_.map(item => item);
+    //     let state = this.state_.slice(0);
     //     return state;
         
     // }
@@ -231,7 +239,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-let subesh = new __WEBPACK_IMPORTED_MODULE_1__FiniteAutomata_Tuples_FATuples__["a" /* FATuples */]([0],['a','b'],['q0'],['q0'],{});
+let subesh = new __WEBPACK_IMPORTED_MODULE_1__FiniteAutomata_Tuples_FATuples__["a" /* FATuples */](['q0'],['a','b'],['q1'],['q0'],{});
 console.log(subesh);
 
 console.log('Subesh');
