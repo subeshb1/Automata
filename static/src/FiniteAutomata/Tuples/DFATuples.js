@@ -1,3 +1,4 @@
+
 import FATuples from "./FATuples.js";
 
 
@@ -51,14 +52,12 @@ export default class DFATuples extends FATuples {
                 if( transition[state][input].length !== 1) {
                     throw "Only one transition can be defined for an input.";
                 }
+                else if(input === FATuples.EPSILON)
+                    throw "FA can't contain Epsilion transition";
             }
-            if(countAlphabet !== this.alphabet.length) {
-               
-                
+            if(countAlphabet !== this.alphabet.length) {   
                 throw "Transition for every input is not defined.";
             }
-
-            
         }
         if(countState !== this.state.length)
             throw "Transition for every state is not defined.";

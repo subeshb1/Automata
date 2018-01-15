@@ -1,4 +1,4 @@
-const EPSILON = '`';
+const EPSILON = '$';
 
 
 /**
@@ -40,6 +40,8 @@ export default class FATuples {
      */
 
     constructor(...tuples) {
+        if(this.constructor === FATuples)
+            throw "FATuples is an abstract Class";
         if (tuples.length === 5 || tuples.length === 0) {
             this.state_ = [];
             this.alphabet_ = [];
@@ -217,7 +219,7 @@ export default class FATuples {
     set transition(transition) {
         if (transition instanceof Object && !(transition instanceof Array)) {
             for (let state in transition) {
-                if(!transition[state] instanceof Object)
+                if(!(transition[state] instanceof Object))
                     throw "The state transition must me an Object";
                 if (!this.state.find(item => item === state)) 
                     throw "Transition Defined for state not in set of States(Q)";

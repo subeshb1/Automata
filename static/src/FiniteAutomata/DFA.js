@@ -1,11 +1,10 @@
 import FA from './FA.js';
 import FATuples from './Tuples/FATuples.js';
+import DFATuples from './Tuples/DFATuples.js';
 
 export default class DFA extends FA {
-    constructor(tuples) {
-
-        super(tuples);
-   
+    constructor(...tuples) {
+        super(...tuples);
     }
 
     ETF(input) {
@@ -18,6 +17,16 @@ export default class DFA extends FA {
             currentState = transition[currentState][input[i]][0];
         }
         return [currentState];
+    }
+    /**
+     * @override
+     * 
+     * @param {any} tuples 
+     * @memberof DFA
+     */
+    checkTuples(tuples) {
+        if(!(tuples instanceof DFATuples))
+          throw "Can only take DFA Tuples.";
     }
 }
 
