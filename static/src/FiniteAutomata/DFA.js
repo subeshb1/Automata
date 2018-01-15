@@ -1,12 +1,14 @@
 import FA from './FA.js';
 import FATuples from './Tuples/FATuples.js';
 import DFATuples from './Tuples/DFATuples.js';
+import DFAMinimizer from './Actions/DFAMinimizer.js';
 
 export default class DFA extends FA {
     constructor(...tuples) {
         super(...tuples);
+        this.dfaMinimize = new DFAMinimizer();
     }
-
+    
     ETF(input) {
 
         let currentState = this.tuples_.initial[0];
@@ -27,6 +29,12 @@ export default class DFA extends FA {
     checkTuples(tuples) {
         if(!(tuples instanceof DFATuples))
           throw "Can only take DFA Tuples.";
+    }
+    minimize()  {
+        let tuples = this.tuples.copy();
+        this.dfaMinimize.setDFATuples(tuples);
+        this.dfaMinimize.minimize();
+        return tuples;
     }
 }
 

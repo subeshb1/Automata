@@ -1,4 +1,5 @@
 import DFA from "../DFA.js";
+import DFATuples from "../Tuples/DFATuples.js";
 
 class Pair {
     constructor(state1, state2) {
@@ -50,7 +51,7 @@ export default class DFAMinimizer {
         this.pair = [];
         if (arguments.length) {
             try {
-                this.setDFA(tuples);
+                this.setDFATuples(tuples);
             } catch (e) {
                 throw "THe constructor takes zero parameter or takes instance of a DFA class.";
             }
@@ -58,8 +59,8 @@ export default class DFAMinimizer {
     }
 
     setDFATuples(tuples) {
-        if (!tuples || !(tuples instanceof DFA)) {
-            throw "It takes an instance of DFA Class.";
+        if (!tuples || !(tuples instanceof DFATuples)) {
+            throw "It takes an instance of DFATuples Class.";
         }
         this.tuples = tuples;
     }
@@ -92,6 +93,8 @@ export default class DFAMinimizer {
                 this.pair.push(new Pair(states[i], states[j]));
             }
         }
+        // console.log(...this.pair);
+        
     }
 
     
@@ -101,11 +104,12 @@ export default class DFAMinimizer {
                 pair.mark();
             }
         });
+        // console.log(...this.pair);
     }
 
     isDistinguisable(pair) {
-        let a = this.tuples.hasFinal([pair.states[0]]);
-        let b = this.tuples.hasFinal([pair.states[1]]);
+        let a = this.hasFinal([pair.states[0]]);
+        let b = this.hasFinal([pair.states[1]]);
         return a ^ b;
     }
     markRemaining() {
@@ -234,6 +238,12 @@ export default class DFAMinimizer {
         this.tuples.initial = initial;
         this.tuples.final = final;
         this.tuples.transition = transition;
+    }
+
+    hasFinal(states) {
+        return !states.every(state => {
+            return !this.tuples.final.find(item => item == state);
+        });
     }
 
 }

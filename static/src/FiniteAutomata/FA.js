@@ -109,8 +109,10 @@ export default class FA {
     }
 
     hasFinal(states) {
+        
         return !states.every(state => {
-            return !this.tuples_.final.find(item => item == state);
+            
+            return !this.tuples_.final.find(item => {  return item === state});
         });
     }
 

@@ -206,7 +206,7 @@ export default class FATuples {
      * @memberof FATuples
      */
     get transition() {
-        let transition = Object.assign({}, this.transition_);
+        let transition = this.copyTransition(this.transition_);
         
         return transition;
     }
@@ -238,8 +238,29 @@ export default class FATuples {
                 }
             }
 
-            this.transition_ = Object.assign({}, transition);
+            this.transition_ = this.copyTransition(transition);
         }
     }
 
+    copyTransition(transition) {
+        let ntransition = {};
+        for (let state in transition) {
+            ntransition[state] = Object.assign({},transition[state]);
+            for(let input in transition[state]) {
+                ntransition[state][input] = Object.assign([],transition[state][input]);
+            }
+        }
+        return ntransition;
+    }
+
+    copy() {
+        let tuples = Object.create(this);
+        tuples.state_ = this.state;
+        tuples.alphabet_ = this.alphabet;
+        tuples.initial_ = this.initial;
+        tuples.final_ = this.final;
+        tuples.transition_ = this.transition;
+        return tuples;
+    }
+    
 }
