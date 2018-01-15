@@ -11,9 +11,9 @@ export default class DFA extends FA {
     
     ETF(input) {
 
-        let currentState = this.tuples_.initial[0];
+        let currentState = this.tuples.initial[0];
         
-        let transition = this.tuples_.transition;
+        let transition = this.tuples.transition;
         
         for(let i =0; i < input.length; i++) {
             currentState = transition[currentState][input[i]][0];

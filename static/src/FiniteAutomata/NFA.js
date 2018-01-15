@@ -8,46 +8,12 @@ export default class NFA extends FA {
   }
 
   ETF(input) {
-    let states = this.tuples_.initial;
-
-
-    /**
-     * transition - A function to make the transition among set of transitions.
-     *
-     * @param {input} symbol - a symbol belonging to the alphabet set
-     *
-     * @return {Array} Array with set of state and with prototype transition.
-     */
-
-    states.transition = symbol => {
-      //A temp to store states
-      let temp = [];
-      //Transitioning each state
-      states.forEach(state => {
-        let statesTemp;
-        try {
-          statesTemp = this.tuples_.transition[state][symbol];
-        } catch (e) {
-          return;
-        }
-        if (statesTemp) {
-          statesTemp.forEach((item) => {
-            temp.push(item);
-          });
-        }
-
-      });
-      temp.transition = states.transition;
-      return temp;
-    };
-
-
-
+    let states = this.tuples.initial;
 
     let strLen = input.length;
     for (let i = 0; i < strLen; i++) {
 
-      states = states.transition(input[i]);
+      states = this.transition(states,input[i]);
     }
     return states;
   }
@@ -56,6 +22,24 @@ export default class NFA extends FA {
     if (!(tuples instanceof NFATuples || tuples instanceof DFATuples))
       throw "Can only take NFA or DFA Tuples.";
   }
+
+
+  
+
+  transition(states, input) {
+    let temp = [];
+
+    states.forEach(state => {
+        if (this.tuples.transition[state] && this.tuples.transition[state][input]) {
+            this.tuples.transition[state][input].forEach(st => {
+                if (temp.findIndex(item => item === st) === -1)
+                    temp.push(st);
+            });
+        }
+    });
+
+    return temp;
+}
   
 
 }

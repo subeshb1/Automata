@@ -19,7 +19,7 @@ export default class FA {
         if(tuples.length === 0 )
             this.tuples_ = undefined;
         else if(tuples.length === 1)
-            this.tuples = tuple[0];
+            this.tuples = tuples[0];
         else
             throw "The constructor takes either 0 or 1 arg(FATuples)."
 

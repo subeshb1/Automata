@@ -5,74 +5,88 @@ import DFATuples from './FiniteAutomata/Tuples/DFATuples.js';
 import NFA from './FiniteAutomata/NFA.js';
 import NFATuples from './FiniteAutomata/Tuples/NFATuples.js';
 import ENFATuples from './FiniteAutomata/Tuples/ENFATuples.js'
-let t1 = new DFATuples (['q0','q1','q2'],['0','1'],['q0'],['q2','q0'],{
+import ENFA from './FiniteAutomata/ENFA.js';
+
+
+
+let etup = new DFATuples();
+etup.state = ['q0','q1','q2'];
+etup.alphabet = ['a','b'];
+etup.initial = ['q0'];
+etup.final = ['q2'];
+etup.transition = {
     q0: {
-        0:['q1'],
-        1:['q0']
+        a:['q0'],
+        b:['q1']
     },
     q1: {
-        0:['q2'],
-        1:['q1']
+        b:['q1'],
+        a:['q2']
     },
-    q2: {
-        0:['q1'],
-        1:['q2']
+    q2:{
+        a:['q2'],
+        b:['q2']
     }
-});
-let subesh = new DFATuples(['A','B','C','D','E','F','G','H','I'],['a', 'b'],['A'],['C','D','F','H'],{
-    A : {
-        a:['B'],
-        b:['I']
+    
+};
+
+let etup2 = new ENFATuples(['q0','q1','q2'],['0','1'],['q0'],['q2'],{
+    q0:{
+        0:['q0'],
+        $:['q1']
     },
-    B : {
-        a:['C'],
-        b:['D']
+    q1:{
+        1:['q1'],
+        $:['q2']
     },
-    C : {
-        a:['E'],
-        b:['G']
-    },
-    D : {
-        a:['G'],
-        b:['E']
-    },
-    E : {
-        a:['E'],
-        b:['E']
-    },
-    F : {
-        a:['E'],
-        b:['G']
-    },
-    G : {
-        a:['G'],
-        b:['G']
-    },
-    H : {
-        a:['E'],
-        b:['G']
-    },
-    I : {
-        a:['F'],
-        b:['H']
+    q2:{
+        0:['q2']
     }
 });
 
+let etup3 = new ENFATuples();
+etup3.state = ['0','1','2','3','4','5','6','7','8'];
+etup3.alphabet = ['a','b'];
+etup3.initial = ['0'];
+etup3.final = ['8'];
+etup3.transition = {
+    0:{
+        $:['1','7']
 
-let dfa = new DFA();
+    },
+    1:{
+        $:['2','4']
 
-dfa.tuples = subesh;
-console.log(subesh);
-dfa.tuples = dfa.minimize();
-console.log(dfa.tuples);
+    },
+    2:{
+        a:['3']
 
-console.log(dfa.check('aaa'));
+    },
+    3:{
+        $:['6']
 
-dfa.tuples = t1;
-console.log(t1);
-dfa.tuples = dfa.minimize();
-console.log(dfa.tuples);
+    },
+    4:{
+        b:['5']
 
-console.log(dfa.check('010100'));
+    },
+    5:{
+        $:['6']
 
+    },
+    6:{
+        $:['1','7']
 
+    },
+    7:{
+        a:['8']
+
+    }
+    
+};
+let enfa = new NFA(etup);
+console.log(enfa.check('a'));
+console.log(enfa);
+// enfa.tuples = etup2;
+// console.log(enfa.check(''));
+// console.log(enfa);
