@@ -45,27 +45,27 @@ class Pair {
 
 
 export default class DFAMinimizer {
-    constructor(dfa) {
-        this.dfa = undefined;
+    constructor(tuples) {
+        this.tuples = undefined;
         this.pair = [];
         if (arguments.length) {
             try {
-                this.setDFA(dfa);
+                this.setDFA(tuples);
             } catch (e) {
                 throw "THe constructor takes zero parameter or takes instance of a DFA class.";
             }
         }
     }
 
-    setDFA(dfa) {
-        if (!dfa || !(dfa instanceof DFA)) {
+    setDFATuples(tuples) {
+        if (!tuples || !(tuples instanceof DFA)) {
             throw "It takes an instance of DFA Class.";
         }
-        this.dfa = dfa;
+        this.tuples = tuples;
     }
 
     minimize() {
-        if (this.dfa) {
+        if (this.tuples) {
             return this.myHIllAlgo();
         } else {
             throw "DFA is not set";
@@ -85,7 +85,7 @@ export default class DFAMinimizer {
     }
     
     makePair() {
-        let states = this.dfa.tuples_.state;
+        let states = this.tuples.state;
         this.pair = [];
         for (let i = 0; i < states.length - 1; i++) {
             for (let j = i + 1; j < states.length; j++) {
@@ -104,8 +104,8 @@ export default class DFAMinimizer {
     }
 
     isDistinguisable(pair) {
-        let a = this.dfa.hasFinal([pair.states[0]]);
-        let b = this.dfa.hasFinal([pair.states[1]]);
+        let a = this.tuples.hasFinal([pair.states[0]]);
+        let b = this.tuples.hasFinal([pair.states[1]]);
         return a ^ b;
     }
     markRemaining() {
@@ -114,7 +114,7 @@ export default class DFAMinimizer {
             change = false;
             this.pair.forEach(pair => {
                 if (!pair.isMarked()) {
-                    this.dfa.tuples_.alphabet.forEach(input => {
+                    this.tuples.alphabet.forEach(input => {
                         if (this.isPairTransitionMarked(pair, input)) {
                             pair.mark();
                             change = true;
@@ -128,8 +128,8 @@ export default class DFAMinimizer {
     }
     
     isPairTransitionMarked(pair, input) {
-        let a = this.dfa.tuples_.transition[pair.states[0]][input][0];
-        let b = this.dfa.tuples_.transition[pair.states[1]][input][0];
+        let a = this.tuples.transition[pair.states[0]][input][0];
+        let b = this.tuples.transition[pair.states[1]][input][0];
         let tpair;
 
         for (let i = 0; i < this.pair.length; i++) {
@@ -172,9 +172,9 @@ export default class DFAMinimizer {
     }
 
     makeChanges() {
-        let transition = this.dfa.tuples_.transition;
-        let initial = this.dfa.tuples_.initial[0];
-        let final = this.dfa.tuples_.final;
+        let transition = this.tuples.transition;
+        let initial = this.tuples.initial[0];
+        let final = this.tuples.final;
         let nfinal = [];
         let nstate = [];
         this.pair.forEach(item => {
@@ -224,16 +224,16 @@ export default class DFAMinimizer {
     makeTransition(pair) {
         let state = pair.states[0];
         let transition = {};
-        this.dfa.tuples_.alphabet.forEach(input => {
-            transition[input] =this.dfa.tuples_.transition[state][input];
+        this.tuples.alphabet.forEach(input => {
+            transition[input] =this.tuples.transition[state][input];
         });
         return transition;
     }
     makeNewTuples(state,initial,final,transition) {
-        this.dfa.tuples_.state = state;
-        this.dfa.tuples_.initial = initial;
-        this.dfa.tuples_.final = final;
-        this.dfa.tuples_.transition = transition;
+        this.tuples.state = state;
+        this.tuples.initial = initial;
+        this.tuples.final = final;
+        this.tuples.transition = transition;
     }
 
 }
