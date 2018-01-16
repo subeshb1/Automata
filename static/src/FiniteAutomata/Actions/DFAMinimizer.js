@@ -181,14 +181,17 @@ export default class DFAMinimizer {
         let final = this.tuples.final;
         let nfinal = [];
         let nstate = [];
+        //push new transition
         this.pair.forEach(item => {
-            transition[item.states.join("")] = this.makeTransition(item);
+            transition[item.states.sort().join("")] = this.makeTransition(item);
         });
+        //delete the old state present in the new state ABC delete A,B,C
         this.pair.forEach(item => {
             item.states.forEach(state=> {
                 delete transition[state];
             });
         });
+        //change the old transition according to new one ie A is changed to ABC if A belongs to ABC
         for(let state in transition) {
             for(let alphabet in transition[state]) {
                 let transit = transition[state][alphabet][0];

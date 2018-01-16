@@ -6,87 +6,51 @@ import NFA from './FiniteAutomata/NFA.js';
 import NFATuples from './FiniteAutomata/Tuples/NFATuples.js';
 import ENFATuples from './FiniteAutomata/Tuples/ENFATuples.js'
 import ENFA from './FiniteAutomata/ENFA.js';
+import NfaToDfa from './FiniteAutomata/Actions/NfaToDfa.js';
 
 
 
-let etup = new DFATuples();
-etup.state = ['q0','q1','q2'];
-etup.alphabet = ['a','b'];
-etup.initial = ['q0'];
-etup.final = ['q2'];
-etup.transition = {
-    q0: {
-        a:['q0'],
-        b:['q1']
-    },
-    q1: {
-        b:['q1'],
-        a:['q2']
-    },
-    q2:{
-        a:['q2'],
-        b:['q2']
-    }
-    
-};
-
-let etup2 = new ENFATuples(['q0','q1','q2'],['0','1'],['q0'],['q2'],{
+let etup2 = new NFATuples(['q0','q1','q2','q3'],['a','b'],['q0'],['q2','q3'],{
     q0:{
-        0:['q0'],
-        $:['q1']
+        b:['q0'],
+        a:['q0','q1']
+        
     },
     q1:{
-        1:['q1'],
-        $:['q2']
+        a:['q2'],
+        b:['q1']
+        
     },
     q2:{
-        0:['q2']
+        a:['q3'],
+        b:['q3']
+    },
+    q3: {
+        b:['q2']
     }
 });
 
-let etup3 = new ENFATuples();
-etup3.state = ['0','1','2','3','4','5','6','7','8'];
-etup3.alphabet = ['a','b'];
-etup3.initial = ['0'];
-etup3.final = ['8'];
-etup3.transition = {
-    0:{
-        $:['1','7']
-
+let nfa = new NFATuples(['A','B','C','D'],['a','b'],['A'],['A','B'], {
+    A: {
+        a: ['B','C'],
+        b: []
     },
-    1:{
-        $:['2','4']
-
+    B: {
+        a: ['B','C'],
+        b: []
     },
-    2:{
-        a:['3']
-
+    C: {
+        b: ['B','D'],
+        a: []
     },
-    3:{
-        $:['6']
-
-    },
-    4:{
-        b:['5']
-
-    },
-    5:{
-        $:['6']
-
-    },
-    6:{
-        $:['1','7']
-
-    },
-    7:{
-        a:['8']
-
+    B: {
+        a: ['B','C'],
+        b: []
     }
-    
-};
-let enfa = new NFA(etup);
-console.log(enfa.check('a'));
-console.log(enfa);
-// enfa.tuples = etup2;
-// console.log(enfa.check(''));
-// console.log(enfa);
+});
+ let nfaW = new NFA();
+ nfaW.tuples = etup2;
+ console.log(nfaW.toDFA());
+ nfaW.tuples = nfa;
+ console.log(nfaW.toDFA());
+ 
