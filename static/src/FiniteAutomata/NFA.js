@@ -3,6 +3,7 @@ import FA from "./FA.js";
 import DFATuples from "./Tuples/DFATuples.js";
 import NfaToDfa from './Actions/NfaToDfa.js'
 export default class NFA extends FA {
+
   constructor(...tuples) {
     super(...tuples);
     this.dfaConverter = new NfaToDfa();
@@ -24,25 +25,15 @@ export default class NFA extends FA {
       throw "Can only take NFA or DFA Tuples.";
   }
 
-
-
-
-  transition(states, input) {
-    let temp = [];
-
-    states.forEach(state => {
-      if (this.tuples.transition[state] && this.tuples.transition[state][input]) {
-        this.tuples.transition[state][input].forEach(st => {
-          if (temp.findIndex(item => item === st) === -1)
-            temp.push(st);
-        });
-      }
-    });
-
-    return temp;
-  }
-
+  /**
+   * COnverts the NFATuples to DFATuples 
+   * 
+   * @returns DFATuples
+   * @memberof NFA
+   */
   toDFA() {
+      if(this.tuples instanceof DFATuples)
+        return this.tuples.copy();
       this.dfaConverter.setTuples(this.tuples);
       let dfa = this.dfaConverter.convert();
       return dfa;

@@ -11,14 +11,12 @@ export default class DFA extends FA {
     
     ETF(input) {
 
-        let currentState = this.tuples.initial[0];
-        
-        let transition = this.tuples.transition;
-        
+        let currentStates = this.tuples.initial;
+                
         for(let i =0; i < input.length; i++) {
-            currentState = transition[currentState][input[i]][0];
+            currentStates = this.transition(currentStates,input[i]);
         }
-        return [currentState];
+        return currentStates;
     }
     /**
      * @override

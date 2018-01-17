@@ -107,7 +107,13 @@ export default class FA {
     ETF(input) {
         throw "ETF is an abstract method. Needs to be implemented in Child Class"
     }
-
+    /**
+     * Checking to see if the set of passed states contain a final state
+     * 
+     * @param {any} states 
+     * @returns 
+     * @memberof FA
+     */
     hasFinal(states) {
         
         return !states.every(state => {
@@ -116,6 +122,36 @@ export default class FA {
         });
     }
 
+
+    /**
+     * Returns the transition  for give states and input
+     * 
+     * @param {any} states 
+     * @param {any} input 
+     * @returns 
+     * @memberof FA
+     */
+    transition(states, input) {
+        let temp = [];
+
+        states.forEach(state => {
+            if (this.tuples.transition[state] && this.tuples.transition[state][input]) {
+                this.tuples.transition[state][input].forEach(st => {
+                    if (temp.findIndex(item => item === st) === -1)
+                        temp.push(st);
+                });
+            }
+        });
+
+        return temp;
+    }
+    
+    /**
+     * Copying the tuples
+     * 
+     * @returns 
+     * @memberof FA
+     */
     copyTuples() {
         if(this.tuples) {
             return this.tuples.copy();
@@ -124,7 +160,12 @@ export default class FA {
             throw "FAtuples is undefined.";
         }
     }
-
+    /**
+     * Changing the tuples state name
+     * 
+     * @param {any} char 
+     * @memberof FA
+     */
     changeTupleStateName(char) {
         if(this.tuples) {
             this.tuples.changeStateName(char);

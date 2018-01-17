@@ -7,19 +7,30 @@ import NFATuples from './FiniteAutomata/Tuples/NFATuples.js';
 import ENFATuples from './FiniteAutomata/Tuples/ENFATuples.js'
 import ENFA from './FiniteAutomata/ENFA.js';
 import NfaToDfa from './FiniteAutomata/Actions/NfaToDfa.js';
- let nfa = new NFATuples(['q0','q1'],['a','b'],['q0'],['q1'], {
+import EnfaToDfa from './FiniteAutomata/Actions/EnfaToDfa.js';
+import EnfaToNfa from './FiniteAutomata/Actions/EnfaToNfa.js';
+ let nfa = new ENFATuples(['q0','q1','q2'],['a','b','c'],['q0'],['q2'], {
     q0: {
         a:['q0'],
-        b:['q1']
+        $:['q1']
     },q1: {
-        a:['q0'],
+        b:['q1'],
+        $:['q2']
         
+    },
+    q2: {
+        c:['q2']
     }
  });
 
- 
  console.log(nfa);
- 
- let nfa1 = new NFA(nfa);
- 
- 
+  let conv = new EnfaToNfa();
+  conv.setTuples(nfa);
+  let nfa2 = conv.convert();
+  console.log(nfa2);
+  let conv2 = new NfaToDfa(nfa2);
+  
+  
+ let dfa = new DFA(conv2.convert());
+//  dfa.changeTupleStateName('q');
+ console.log(dfa.check('abcc'));
