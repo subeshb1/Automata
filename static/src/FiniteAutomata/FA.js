@@ -116,4 +116,22 @@ export default class FA {
         });
     }
 
+    copyTuples() {
+        if(this.tuples) {
+            return this.tuples.copy();
+        }
+        else {
+            throw "FAtuples is undefined.";
+        }
+    }
+
+    changeTupleStateName(char) {
+        if(this.tuples) {
+            this.tuples.changeStateName(char);
+        }
+        else {
+            throw "FAtuples is undefined.";
+        }
+    }
+
 }

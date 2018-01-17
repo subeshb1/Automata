@@ -1,25 +1,22 @@
 
 import NFATuples from '../Tuples/NFATuples.js'
 import DFATuples from '../Tuples/DFATuples.js';
+import Conversion from './Conversion.js';
 
-const DEADCONFIG = "999";
-export default class NfaToDfa {
-    constructor(tuples) {
-        
-        if(arguments.length === 0) {
-            this.tuples = undefined;
-        } else if(arguments.length === 1) {
-            this.setNFATuples(tuples);
-        }
+
+export default class NfaToDfa extends Conversion{
+    constructor(...tuples) {
+        super(...tuples);
 
     }
-    setNFATuples(tuples) {
+
+    setTuples(tuples) {
         if(!tuples || !(tuples instanceof NFATuples))
             throw "Can only take instance of NFATuples.";
         this.tuples = tuples;
     }
 
-    convertToDFA() {
+    convert() {
         if(this.tuples)
         {
             return this.subSetConstruction();
@@ -91,52 +88,7 @@ export default class NfaToDfa {
         });    
         
          return transitionArr;
-    }
-    static get DEADCONFIG() {
-        return DEADCONFIG;
-
-    }
-
-
-    contains(arr,val) {
-        let var1 = arr.find( item => {
-            return this.check(item.tname ,val);
-        });
-        
-        if(var1)
-            return true;
-        return false;
-    }
-
-    check(arr1,arr2) {
-        if(arr1.length !== arr2.length)
-            return false;
-        return arr1.every(item1 => {
-            return arr2.find(item2 => item2 == item1);
-        });
-    }
-
-    transition(states, input) {
-        let temp = [];
-    
-        states.forEach(state => {
-            if (this.tuples.transition[state] && this.tuples.transition[state][input]) {
-                this.tuples.transition[state][input].forEach(st => {
-                    if (temp.findIndex(item => item === st) === -1)
-                        temp.push(st);
-                });
-            }
-        });
-    
-        return temp;
-    }
-
-
-    hasFinal(states) {
-        return !states.every(state => {
-            return !this.tuples.final.find(item => item == state);
-        });
-    }
+    } 
 
 }
 

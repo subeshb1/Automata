@@ -40,7 +40,7 @@ export default class FATuples {
      */
 
     constructor(...tuples) {
-        if(this.constructor === FATuples)
+        if (this.constructor === FATuples)
             throw "FATuples is an abstract Class";
         if (tuples.length === 5 || tuples.length === 0) {
             this.state_ = [];
@@ -149,7 +149,7 @@ export default class FATuples {
 
     }
 
-    
+
     /**
      * @setter - alphabet_
      * 
@@ -207,7 +207,7 @@ export default class FATuples {
      */
     get transition() {
         let transition = this.copyTransition(this.transition_);
-        
+
         return transition;
     }
 
@@ -219,9 +219,9 @@ export default class FATuples {
     set transition(transition) {
         if (transition instanceof Object && !(transition instanceof Array)) {
             for (let state in transition) {
-                if(!(transition[state] instanceof Object))
+                if (!(transition[state] instanceof Object))
                     throw "The state transition must me an Object";
-                if (!this.state.find(item => item === state)) 
+                if (!this.state.find(item => item === state))
                     throw "Transition Defined for state not in set of States(Q)";
                 for (let input in transition[state]) {
                     if (!this.alphabet.find(item => item === input) && input != FATuples.EPSILON)
@@ -231,10 +231,9 @@ export default class FATuples {
                             if (!this.state.find(item => item === tstate))
                                 throw "Transition goes to a state not in set of States(Q)";
                         });
-                    } 
-                    else 
+                    } else
                         throw "The transition should contain states in an Array";
-                     
+
                 }
             }
 
@@ -245,14 +244,19 @@ export default class FATuples {
     copyTransition(transition) {
         let ntransition = {};
         for (let state in transition) {
-            ntransition[state] = Object.assign({},transition[state]);
-            for(let input in transition[state]) {
-                ntransition[state][input] = Object.assign([],transition[state][input]);
+            ntransition[state] = Object.assign({}, transition[state]);
+            for (let input in transition[state]) {
+                ntransition[state][input] = Object.assign([], transition[state][input]);
             }
         }
         return ntransition;
     }
-
+    /**
+     * Makes a copy of the Tuples
+     * 
+     * @returns copy
+     * @memberof FATuples
+     */
     copy() {
         let tuples = Object.create(this);
         tuples.state_ = this.state;
@@ -262,5 +266,54 @@ export default class FATuples {
         tuples.transition_ = this.transition;
         return tuples;
     }
-    
+
+    /**
+     * @description - changes the states to the passed char
+     * @example
+     * {
+     * if you passed 's'
+     * states = ['A','B','C'] becomes
+     * states = ['s0','s1','s2']
+     * }
+     * @memberof FATuples
+     */
+    changeStateName(char) {
+        if (char.length !== 1 || typeof char !== 'string')
+            throw "Char must be of length 1 and type string";
+        let states = this.state;
+        let transition = this.transition;
+        let initial = this.initial;
+        let final = this.final;
+        states.forEach((state, index) => {
+            let oldState = state;
+            let newState = char + index;
+            states[index] = newState;
+            transition[newState] = transition[oldState];
+            
+            delete transition[oldState];
+            
+            for (let st in transition) {
+                for (let input in transition[st]) {
+                    transition[st][input].forEach((s,i) => {
+                        if( s === oldState)
+                        transition[st][input][i] = newState;
+                    })
+                }
+            }
+            if(initial[0] === oldState)
+                initial = [newState];
+            final.forEach( (s,i) => {
+                if( s === oldState)
+                    final[i] = newState;
+            });
+            
+        });
+        
+        this.state = states;
+        this.initial = initial;
+        this.final = final;
+        this.transition = transition;
+        
+    }
+
 }

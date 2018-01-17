@@ -43,8 +43,8 @@ export default class NFA extends FA {
   }
 
   toDFA() {
-      this.dfaConverter.setNFATuples(this.tuples);
-      let dfa = this.dfaConverter.convertToDFA();
+      this.dfaConverter.setTuples(this.tuples);
+      let dfa = this.dfaConverter.convert();
       return dfa;
 
   }
