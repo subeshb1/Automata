@@ -67,6 +67,7 @@ export default class FA {
         if (this.tuples_) {
             if (typeof input !== 'string')
                 throw "Input only accepts type string";
+            input = input.trim();
             if (this.isValidInput(input)) {
                 let states = this.ETF(input);
                 if (this.hasFinal(states)) {

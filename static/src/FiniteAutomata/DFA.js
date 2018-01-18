@@ -32,6 +32,22 @@ export default class DFA extends FA {
         if (mode === undefined)
             mode = false;
         let tuples = this.tuples.copy();
+        for(let i =0 ; i < tuples.state.length-1; i++) {
+            let c = 0;
+            for(let j = i+1; j < tuples.state.length; j++)  {
+                if( tuples.state[i].includes(tuples.state[j]) || tuples.state[j].includes(tuples.state[i])) {
+                   
+                    c = 1;
+                    tuples.changeStateName('q');
+                    console.log("Ambiguous state name");
+                    
+                    break;
+                }
+
+            }
+            if(c)
+                break;
+        }
         this.dfaMinimize.setDFATuples(tuples);
         this.dfaMinimize.minimize();
         if(!mode)

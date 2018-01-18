@@ -35,7 +35,6 @@ export default class EnfaToNfa extends Conversion {
         nfa.initial = initial;
         nfa.final = final;
         nfa.transition = transition;
-        console.log(nfa);
         return nfa
     }
 

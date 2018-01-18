@@ -23,14 +23,13 @@ export default class EnfaToDfa extends Conversion {
         return this.eClose(this.transition(state, input));
     }
 
-    makeTuple(state,alphabet,initial,final,transition) {
+    makeTuple(states,alphabet,initial,final,transition) {
         let dfa = new DFATuples();
         dfa.state = states;
         dfa.alphabet = alphabet;
         dfa.initial = initial;
         dfa.final = final;
         dfa.transition = transition;
-        console.log(dfa);
         return dfa
     }
    

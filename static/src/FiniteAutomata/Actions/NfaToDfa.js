@@ -33,7 +33,6 @@ export default class NfaToDfa extends Conversion{
         dfa.initial = initial;
         dfa.final = final;
         dfa.transition = transition;
-        console.log(dfa);
         return dfa
     }
   

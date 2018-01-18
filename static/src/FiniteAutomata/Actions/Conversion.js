@@ -130,7 +130,6 @@ export default class Conversion {
                             itemTrans = this.DEADCONFIG;
                         }
                         item.trans[input] = itemTrans.slice(0);
-                        console.log(this.push);
 
                         if (!this.contains(transitionArr, itemTrans) && this.push)
                             transitionArr.push({
@@ -152,7 +151,6 @@ export default class Conversion {
                 }
             });
         }
-        console.log(transitionArr);
 
         return transitionArr;
 
