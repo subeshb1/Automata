@@ -24,13 +24,14 @@ import EnfaToNfa from './FiniteAutomata/Actions/EnfaToNfa.js';
  });
 
  console.log(nfa);
+ nfa.changeStateName('s');
   let conv = new EnfaToNfa();
   conv.setTuples(nfa);
   let nfa2 = conv.convert();
   console.log(nfa2);
-  let conv2 = new NfaToDfa(nfa2);
+  let conv2 = new NFA(nfa2);    
   
   
- let dfa = new DFA(conv2.convert());
-//  dfa.changeTupleStateName('q');
+ let dfa = new DFA(conv2.toDFA());
+
  console.log(dfa.check('abcc'));

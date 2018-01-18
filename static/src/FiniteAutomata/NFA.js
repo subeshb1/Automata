@@ -31,11 +31,15 @@ export default class NFA extends FA {
    * @returns DFATuples
    * @memberof NFA
    */
-  toDFA() {
+  toDFA(mode) {
+      if(mode === undefined)
+        mode = false;
       if(this.tuples instanceof DFATuples)
         return this.tuples.copy();
       this.dfaConverter.setTuples(this.tuples);
       let dfa = this.dfaConverter.convert();
+      if(!mode)
+        dfa.changeStateName('q');
       return dfa;
 
   }

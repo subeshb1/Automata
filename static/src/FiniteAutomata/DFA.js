@@ -28,10 +28,14 @@ export default class DFA extends FA {
         if(!(tuples instanceof DFATuples))
           throw "Can only take DFA Tuples.";
     }
-    minimize()  {
+    minimize(mode)  {
+        if (mode === undefined)
+            mode = false;
         let tuples = this.tuples.copy();
         this.dfaMinimize.setDFATuples(tuples);
         this.dfaMinimize.minimize();
+        if(!mode)
+            tuples.changeStateName('q');
         return tuples;
     }
 }

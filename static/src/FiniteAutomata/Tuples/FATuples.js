@@ -280,6 +280,14 @@ export default class FATuples {
     changeStateName(char) {
         if (char.length !== 1 || typeof char !== 'string')
             throw "Char must be of length 1 and type string";
+
+        for(let i = 0; i < this.state.length; i++) {
+            if(this.state.find(item => item === char+i) !== undefined) {
+                this.changeStateName('#');
+                break;
+            }
+        }
+
         let states = this.state;
         let transition = this.transition;
         let initial = this.initial;
