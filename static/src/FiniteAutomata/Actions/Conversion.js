@@ -175,7 +175,7 @@ export default class Conversion {
         });
         //transition
         transitionArr.forEach(state => {
-            transition[state.tname.join("")] = state.trans;
+            transition[state.tname.sort().join("")] = state.trans;
         });
         // console.log(transition);
         

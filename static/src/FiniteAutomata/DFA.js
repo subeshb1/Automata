@@ -31,11 +31,15 @@ export default class DFA extends FA {
     minimize(mode)  {
         if (mode === undefined)
             mode = false;
+            
+            
         let tuples = this.tuples.copy();
         for(let i =0 ; i < tuples.state.length-1; i++) {
             let c = 0;
             for(let j = i+1; j < tuples.state.length; j++)  {
-                if( tuples.state[i].includes(tuples.state[j]) || tuples.state[j].includes(tuples.state[i])) {
+                if( (tuples.state[i].includes(tuples.state[j]) && tuples.state[i].length >= (2+tuples.state[j].length))
+
+                || (tuples.state[j].includes(tuples.state[i]) && tuples.state[j].length >= (2+tuples.state[i].length) )) {
                    
                     c = 1;
                     tuples.changeStateName('q');
@@ -52,6 +56,7 @@ export default class DFA extends FA {
         this.dfaMinimize.minimize();
         if(!mode)
             tuples.changeStateName('q');
+        
         return tuples;
     }
 }

@@ -68,8 +68,7 @@ export default class RegExpToENFA {
         this.startState.addTransition('$',valueStack[0].start);
         this.finalState = this.createState();
         valueStack[0].end.addTransition('$',this.finalState);
-        console.log(this.findAlphabet(this.regExp));
-        this.makeENFA();
+        return this.makeENFAToDFA();
     }
 
     //Returns Combine state for a transition input 'a'
@@ -131,8 +130,8 @@ export default class RegExpToENFA {
         return alphabet;
     }
 
-
-    makeENFA() {
+    //REspecive ENFA to DFA
+    makeENFAToDFA() {
         let state = this.state.map(item => item.name);
         // console.log(state);
         let alphabet = this.findAlphabet(this.regExp);
@@ -148,21 +147,16 @@ export default class RegExpToENFA {
             }
         });
 
-
-        console.log(transition);
-        
         let enfat = new ENFATuples(state,alphabet,initial,final,transition);
-        console.log(enfat);
+        
         let enfa = new ENFA(enfat);
-        console.log(enfa.check('aba'));
-        console.log(enfa.toDfa());
-        let dfa = new DFA(enfa.toDfa());
-        console.log(dfa.minimize());
-        console.log(dfa.check('aba'));
+        let dt = enfa.toDfa()
         
+        let dfa = new DFA(dt);
         
-
-        
+        dfa.tuples = dfa.minimize();
+                
+        return dfa;
     }
 
 }

@@ -9,8 +9,8 @@ import ENFA from './FiniteAutomata/ENFA.js';
 import NfaToDfa from './FiniteAutomata/Actions/NfaToDfa.js';
 import EnfaToDfa from './FiniteAutomata/Actions/EnfaToDfa.js';
 import EnfaToNfa from './FiniteAutomata/Actions/EnfaToNfa.js';
-
 import RegEx from './RegularExpression/RegEx.js';
 
+let reg=  new RegEx('(0|1(1|011)*(00|010))*1(1|011)*01');
+console.log(reg.check('01010'));
 
-let reg=  new RegEx('(a|b|c|d|e|f|g|h|i|j|k)(a|b|c|d|e)*');
