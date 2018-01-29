@@ -278,9 +278,11 @@ export default class FATuples {
      * @memberof FATuples
      */
     changeStateName(char) {
-        if (char.length !== 1 || typeof char !== 'string')
-            throw "Char must be of length 1 and type string";
-
+        char = char.toLowerCase();
+        let flag = false;
+        let org = char;
+        if (char.length !== 1 || typeof char !== 'string' || !(  (char[0] >= 'a' && char[0] <= 'z')  || char[0] == '#') )
+            throw "Char must be of length 1 and in the english alphabet";
         for(let i = 0; i < this.state.length; i++) {
             if(this.state.find(item => item === char+i) !== undefined) {
                 this.changeStateName('#');
@@ -294,7 +296,7 @@ export default class FATuples {
         let final = this.final;
         states.forEach((state, index) => {
             let oldState = state;
-            let newState = char + index;
+            let newState = char + index%10;
             states[index] = newState;
             transition[newState] = transition[oldState];
             
@@ -314,6 +316,16 @@ export default class FATuples {
                 if( s === oldState)
                     final[i] = newState;
             });
+            if(index%10 == 9) {
+                char = char.toLowerCase();
+                char = String.fromCharCode( (char.charCodeAt(0) - 97 + 1) % 26 + 97);
+                
+                if(org == char) {
+                    flag = true;
+                }
+                if(flag)
+                    char = char.toUpperCase();
+            }
             
         });
         

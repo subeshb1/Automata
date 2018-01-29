@@ -80,8 +80,10 @@ export default class DFAMinimizer {
         let unmark = this.mergeEquivalentPair();
         if(unmark) {
             this.makeChanges();
+            delete this.pair;
             return true;
         }
+        delete this.pair;
         return false;
     }
     

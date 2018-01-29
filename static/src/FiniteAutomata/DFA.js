@@ -15,6 +15,8 @@ export default class DFA extends FA {
                 
         for(let i =0; i < input.length; i++) {
             currentStates = this.transition(currentStates,input[i]);
+            // if(this.checkLoop(...currentStates))
+            //     break;
         }
         return currentStates;
     }
@@ -28,6 +30,12 @@ export default class DFA extends FA {
         if(!(tuples instanceof DFATuples))
           throw "Can only take DFA Tuples.";
     }
+
+    checkLoop(state) {
+        return !this.tuples.alphabet.every (item => {
+            return this.tuples.transition[state][item] === state
+        });
+    }   
     minimize(mode)  {
         if (mode === undefined)
             mode = false;

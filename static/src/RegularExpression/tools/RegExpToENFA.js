@@ -149,14 +149,8 @@ export default class RegExpToENFA {
 
         let enfat = new ENFATuples(state,alphabet,initial,final,transition);
         
-        let enfa = new ENFA(enfat);
-        let dt = enfa.toDfa()
-        
-        let dfa = new DFA(dt);
-        
-        dfa.tuples = dfa.minimize();
-                
-        return dfa;
+
+        return new ENFA (enfat);
     }
 
 }
