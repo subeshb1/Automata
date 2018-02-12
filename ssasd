@@ -1,0 +1,15 @@
+[33me283e52[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m Performance inhanchement and other bug fixes.
+[33m8dc14d6[m Regular Exp small functionality completed. Betterone in the far future.
+[33maf47e8b[m Regular Expression generated. Few code scrapping needs to be done
+[33m6f19398[m Successfully tested Finite Automata. Completed! or is it?
+[33m39c4977[m Finite Automate without outpust Completed. Ready for testing and debuging.
+[33m009c467[m  Conversion finished with a very Flexible use of Base class. Needs improvement in changeStateName of FATuples
+[33m6f70ec5[m FATuples new features added, Made a base class for conversion. Decided Log class is a task for another day.
+[33m000154b[m NFA TO DFA functionality added to NFA. Going to work on devveloping a base class for conversion, a new log class, and make a method ni FATuples to change name of states
+[33m4c115d5[m ENFA class wrapper to ENFATuples added. Few changes to other classes.
+[33m8442672[m DFA Minimizer added to DFA.
+[33m13f0812[m A little change to DFAMinimize
+[33m099ed76[m FA classes turned into a wrapper for FATuples, Started on ENFA and going to make DFAMinimizer in to DFA class
+[33m54bd75f[m DFAMinimization completed may not be robust but does the job,DFA tuples and other comited which was not previously made.
+[33m0a5b47a[m FATuples FA DFATuples DFA Successfully added. DFAMinimization in progress
+[33m14f6994[m First Commit Git Initializtion

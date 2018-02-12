@@ -10,9 +10,9 @@ import NfaToDfa from './FiniteAutomata/Actions/NfaToDfa.js';
 import EnfaToDfa from './FiniteAutomata/Actions/EnfaToDfa.js';
 import EnfaToNfa from './FiniteAutomata/Actions/EnfaToNfa.js';
 import RegEx from './RegularExpression/RegEx.js';
+import StringSearch from './Application/StringSearch.js';
 
-let reg=  new RegEx('sd|$');
-console.log(reg.enfa);
 
-console.log(reg.check(''));
+let search = new StringSearch('asdsaabcdefgh');
+console.log(search.test('abc'));
 
